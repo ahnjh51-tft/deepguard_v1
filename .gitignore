@@ -5,3 +5,9 @@ __pycache__/
 .DS_Store
 data/
 manifest.json
+# Sensitive/large artifacts
+solid-scope-*.json
+uploads/
+outputs/
+runs/
+old_deepfake/
