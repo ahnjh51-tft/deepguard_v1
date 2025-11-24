@@ -236,6 +236,18 @@ def _ela_heatmap_image(ela_array: np.ndarray) -> Image.Image:
     colormap = cm.get_cmap("jet")
     colored = (colormap(normalized)[:, :, :3] * 255).astype(np.uint8)
     return Image.fromarray(colored)
+
+
+# ---------------------------------------------------------------------------
+# FastAPI setup
+# ---------------------------------------------------------------------------
+app = FastAPI(title="Deepfake ELA+RF Backend", version="0.1.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
