@@ -308,5 +308,7 @@ async def analyze_image(image: UploadFile = File(...)):
 
 if __name__ == "__main__":
     import uvicorn
-
-    uvicorn.run("deepfake_model_ela_rf:app", host="0.0.0.0", port=8000, reload=True)
+    import os
+    
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("deepfake_model_ela_rf:app", host="0.0.0.0", port=port, reload=True)
