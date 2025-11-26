@@ -306,6 +306,11 @@ async def analyze_image(image: UploadFile = File(...)):
     return response
 
 
+@app.get("/")
+def read_root():
+    return {"status": "ok", "message": "DeepGuard Backend is running"}
+
+
 if __name__ == "__main__":
     import uvicorn
     import os
