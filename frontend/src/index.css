@@ -1,96 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
+    /* Vertex AI / Google Cloud Console inspired palette */
     --background: 210 20% 98%;
+    /* #f8f9fa */
     --foreground: 215 25% 20%;
+    /* #202124 */
 
     --card: 0 0% 100%;
+    /* #ffffff */
     --card-foreground: 215 25% 20%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 20%;
 
-    --primary: 205 100% 39%;
+    --primary: 217 89% 61%;
+    /* #1a73e8 Google Blue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 15% 92%;
+    --secondary: 210 20% 96%;
     --secondary-foreground: 215 25% 20%;
 
-    --muted: 210 15% 94%;
-    --muted-foreground: 215 16% 46%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 16% 47%;
+    /* #5f6368 */
 
-    --accent: 199 89% 48%;
+    --accent: 217 89% 61%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 20% 88%;
-    --input: 214 20% 88%;
-    --ring: 205 100% 39%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 89% 61%;
 
     --radius: 0.5rem;
 
-    /* Intel color palette - exact colors from user */
-    --intel-bright-cyan: 196 97% 54%;
-    --intel-light-cyan: 197 97% 71%;
-    --intel-medium-blue: 205 94% 40%;
-    --intel-deep-teal: 198 99% 30%;
-    --intel-pale-blue: 200 36% 82%;
-    --intel-dark-blue: 207 94% 30%;
-    
-    --shadow-subtle: 0 1px 3px 0 hsl(215 25% 20% / 0.05);
-    --shadow-medium: 0 4px 6px -1px hsl(215 25% 20% / 0.1);
-    --shadow-card: 0 2px 8px 0 hsl(200 36% 82% / 0.4);
+    /* Custom Shadows for depth */
+    --shadow-sm: 0 1px 2px 0 rgb(60 64 67 / 0.3), 0 1px 3px 1px rgb(60 64 67 / 0.15);
+    --shadow-md: 0 1px 3px 0 rgb(60 64 67 / 0.3), 0 4px 8px 3px rgb(60 64 67 / 0.15);
   }
 
   .dark {
+    /* Dark mode - Dark gray/blue tone */
     --background: 220 18% 12%;
-    --foreground: 210 20% 95%;
+    /* #1e1e1e */
+    --foreground: 210 20% 98%;
 
-    --card: 220 18% 15%;
-    --card-foreground: 210 20% 95%;
+    --card: 220 18% 16%;
+    --card-foreground: 210 20% 98%;
 
-    --popover: 220 18% 15%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 220 18% 16%;
+    --popover-foreground: 210 20% 98%;
 
-    --primary: 205 100% 50%;
-    --primary-foreground: 220 18% 12%;
+    --primary: 217 89% 61%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 20%;
-    --secondary-foreground: 210 20% 95%;
+    --secondary: 217 19% 27%;
+    --secondary-foreground: 210 20% 98%;
 
-    --muted: 220 15% 18%;
-    --muted-foreground: 215 15% 65%;
+    --muted: 217 19% 27%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 199 89% 55%;
-    --accent-foreground: 220 18% 12%;
+    --accent: 217 19% 27%;
+    --accent-foreground: 210 20% 98%;
 
-    --destructive: 0 72% 50%;
-    --destructive-foreground: 210 20% 95%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 20% 98%;
 
-    --border: 220 15% 25%;
-    --input: 220 15% 25%;
-    --ring: 205 100% 50%;
-
-    /* Intel color palette - dark mode adjusted */
-    --intel-bright-cyan: 196 97% 60%;
-    --intel-light-cyan: 197 97% 75%;
-    --intel-medium-blue: 205 94% 50%;
-    --intel-deep-teal: 198 99% 40%;
-    --intel-pale-blue: 200 36% 25%;
-    --intel-dark-blue: 207 94% 40%;
-    
-    --shadow-subtle: 0 1px 3px 0 hsl(0 0% 0% / 0.3);
-    --shadow-medium: 0 4px 6px -1px hsl(0 0% 0% / 0.4);
-    --shadow-card: 0 2px 8px 0 hsl(200 36% 82% / 0.1);
+    --border: 217 19% 27%;
+    --input: 217 19% 27%;
+    --ring: 217 89% 61%;
   }
 }
 
@@ -100,21 +86,18 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
-    font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
   }
 }
 
+/* Utility classes for Vertex AI look */
 @layer utilities {
-  .shadow-subtle {
-    box-shadow: var(--shadow-subtle);
+  .vertex-card {
+    @apply bg-card border border-border shadow-sm rounded-lg;
   }
-  
-  .shadow-medium {
-    box-shadow: var(--shadow-medium);
-  }
-  
-  .shadow-card {
-    box-shadow: var(--shadow-card);
+
+  .vertex-header {
+    @apply bg-white dark:bg-[#1e1e1e] border-b border-border;
   }
 }

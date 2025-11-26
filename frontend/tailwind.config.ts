@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -47,14 +48,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        intel: {
-          "bright-cyan": "hsl(var(--intel-bright-cyan))",
-          "light-cyan": "hsl(var(--intel-light-cyan))",
-          "medium-blue": "hsl(var(--intel-medium-blue))",
-          "deep-teal": "hsl(var(--intel-deep-teal))",
-          "pale-blue": "hsl(var(--intel-pale-blue))",
-          "dark-blue": "hsl(var(--intel-dark-blue))",
-        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -63,27 +56,29 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "fade-in": {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "glow": {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(6, 182, 212, 0.5)" },
+          "50%": { boxShadow: "0 0 40px rgba(6, 182, 212, 0.8)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.5s ease-out forwards",
+        "glow": "glow 2s infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindAnimate],
 } satisfies Config;

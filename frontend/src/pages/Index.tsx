@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { ShieldCheck, LogOut, Scan, History } from "lucide-react";
 import DetectionTab from "@/components/detection/DetectionTab";
 import HistoryTab from "@/components/detection/HistoryTab";
-import { Scan, History, LogOut } from "lucide-react";
-import deepguardLogo from "@/assets/deepguard-logo.png";
-import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
+import deepguardLogo from "@/assets/deepguard-logo.png";
 
 const Index = () => {
   const { user, logout } = useAuth();
@@ -33,36 +33,38 @@ const Index = () => {
 
   const visibleTabs = tabs.filter((tab) => tab.roles.includes(user?.role ?? "user"));
   const defaultTab = visibleTabs[0]?.value ?? "detection";
-  const gridClass =
-    visibleTabs.length >= 4
-      ? "grid-cols-4"
-      : visibleTabs.length === 3
-      ? "grid-cols-3"
-      : visibleTabs.length === 2
-      ? "grid-cols-2"
-      : "grid-cols-1";
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-white dark:bg-card shadow-medium">
-        <div className="container mx-auto px-4 py-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-4">
-            <img src={deepguardLogo} alt="DeepGuard" className="w-16 h-16 object-contain" />
-            <div>
-              <h1 className="text-2xl font-bold text-[#1e3a8a]">DEEPGUARD</h1>
-              <p className="text-sm font-medium text-[#06b6d4]">AI TRUTH SCAN</p>
-            </div>
+    <div className="min-h-screen bg-background font-sans text-foreground">
+      {/* Vertex AI Style Header */}
+      <header className="vertex-header sticky top-0 z-50 h-16 flex items-center px-6 shadow-sm">
+        <div className="flex items-center gap-3 mr-8">
+          <img src={deepguardLogo} alt="DeepGuard" className="w-8 h-8 object-contain" />
+          <span className="text-xl font-medium tracking-tight text-foreground">
+            DeepGuard <span className="text-primary font-bold">Console</span>
+          </span>
+        </div>
+
+        <div className="flex-1 flex items-center justify-between">
+          {/* Navigation could go here if needed, keeping it clean for now */}
+          <div className="hidden md:flex items-center text-sm text-muted-foreground">
+            <span className="px-3 py-1 bg-secondary rounded-full text-xs font-medium">
+              プロジェクト: Default
+            </span>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <p className="text-sm font-semibold text-intel-dark-blue">{user?.name}</p>
-              <p className="text-xs text-foreground/60">
-                役割: {isAdmin ? "管理者" : "利用者"}
+
+          <div className="flex items-center gap-4">
+            <div className="text-right hidden sm:block">
+              <p className="text-sm font-medium text-foreground">{user?.name}</p>
+              <p className="text-xs text-muted-foreground flex items-center justify-end gap-1">
+                <ShieldCheck className="w-3 h-3" />
+                {isAdmin ? "管理者" : "利用者"}
               </p>
             </div>
             <Button
-              variant="outline"
-              className="border-intel-medium-blue text-intel-medium-blue hover:bg-intel-pale-blue/20"
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground hover:text-foreground hover:bg-secondary"
               onClick={logout}
             >
               <LogOut className="w-4 h-4 mr-2" />
@@ -72,23 +74,27 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <Tabs defaultValue={defaultTab} className="w-full">
-          <TabsList className={`grid w-full mb-8 h-auto p-2 bg-white dark:bg-card shadow-medium border border-border ${gridClass}`}>
-            {visibleTabs.map((tab) => (
-              <TabsTrigger
-                key={tab.value}
-                value={tab.value}
-                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#0071C5] data-[state=active]:to-[#06b6d4] data-[state=active]:text-white data-[state=active]:shadow-glow py-3"
-              >
-                <tab.icon className="w-4 h-4" />
-                <span className="hidden sm:inline">{tab.label}</span>
-              </TabsTrigger>
-            ))}
-          </TabsList>
+      <main className="container mx-auto px-6 py-8 max-w-7xl">
+        <Tabs defaultValue={defaultTab} className="w-full space-y-6">
+          <div className="flex items-center justify-between border-b border-border pb-1">
+            <TabsList className="bg-transparent p-0 h-auto space-x-6">
+              {visibleTabs.map((tab) => (
+                <TabsTrigger
+                  key={tab.value}
+                  value={tab.value}
+                  className="rounded-none border-b-2 border-transparent px-2 py-2 text-sm font-medium text-muted-foreground data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:shadow-none hover:text-foreground transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <tab.icon className="w-4 h-4" />
+                    <span>{tab.label}</span>
+                  </div>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
 
           {visibleTabs.map((tab) => (
-            <TabsContent key={tab.value} value={tab.value}>
+            <TabsContent key={tab.value} value={tab.value} className="focus-visible:outline-none">
               {tab.content}
             </TabsContent>
           ))}
